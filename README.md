@@ -82,8 +82,8 @@ innovation, and ensuring healthy competition within cloud vendors. This tool wil
 greater good for the technology community: ensuring cloud computing is more usable and
 economically viable for everyone.
 
-# 3. Project Activity, Methodology, and Outcomes
-# 3.1 Overview of Activities
+## 3. Project Activity, Methodology, and Outcomes
+### 3.1 Overview of Activities
 The project is divided into four major modules —The project will be developed using
 a 3-tier architecture approach — Frontend, Backend, and Database — with cloud
 integration for data storage, notifications, and cost comparison API access.
@@ -287,21 +287,21 @@ platform, enabling transparent, sustainable, and data-driven decision-making for
 developers across the world.
 
 ## 5.0 References
-Amazon Web Services (AWS) Pricing API Documentation
+-- Amazon Web Services (AWS) Pricing API Documentation
 Available at: https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/price-changes.html
 
-Google Cloud Billing Catalog API
+-- Google Cloud Billing Catalog API
 Available at: https://cloud.google.com/billing/v1/how-tos/catalog-api
 
-Microsoft Azure Retail Prices API Documentation
+-- Microsoft Azure Retail Prices API Documentation
 Available at: https://learn.microsoft.com/en-us/rest/api/cost-management/retail-prices/azureretail-prices
 
-boto3 — AWS SDK for Python
+-- boto3 — AWS SDK for Python
 Available at: https://boto3.amazonaws.com/v1/documentation/api/latest/index.html
 
-google-cloud — Google Cloud Client Libraries for Python
+-- google-cloud — Google Cloud Client Libraries for Python
 Available at: https://cloud.google.com/python/docs/reference
 
-azure-mgmt — Microsoft Azure Management Libraries for Python
+-- azure-mgmt — Microsoft Azure Management Libraries for Python
 Available at: https://learn.microsoft.com/en-us/python/api/overview/azure/?view=azure-python
 
