@@ -132,7 +132,8 @@ Billing API).
 ### 3. Results Page
 Displays previous and current pricing comparison results. Fetches historical results saved in S3 buckets. Uses AWS S3 SDK to retrieve report files. 
 Allows user to download or view summary.
-3.3 Methodology
+
+## 3.3 Methodology
 The project will follow a hybrid Agile model (Scrum-like) with weekly progress check-ins and
 integration testing at every milestone.
 
@@ -174,35 +175,41 @@ All 6 days Working system demo and proposal submission
 
 ## 3.6 Technology Stack
 Category Technology / Tool Purpose / Justification
-Frontend React.js / Vanilla JS, HTML5, CSS3 Build interactive and responsive web UI
-Backend Python (Flask/Django Framework) Handle API requests, data processing, and business logic
-Database AWS RDS (MySQL) Store user data and report metadata (relational)
-Cloud Services
+### Frontend
+React.js / Vanilla JS, HTML5, CSS3 Build interactive and responsive web UI
+### Backend
+Python (Flask/Django Framework) Handle API requests, data processing, and business logic
+### Database
+AWS RDS (MySQL) Store user data and report metadata (relational)
+### Cloud Services
 AWS S3 (Storage), AWS SNS (Notifications),
 AWS EC2 (Deployment)
 Minimal but sufficient cloud integration for demo
 APIs Used AWS Pricing API, Azure Retail Prices API,
 Google Cloud Billing API Fetch real-time pricing data
-Category Technology / Tool Purpose / Justification Deployment
-Tools Docker, GitHub, AWS EC2 Deployment and version control Other Tools
-Postman (API Testing), ArchiMate (Architecture Diagrams), Lucidchart (Workflow Design)Design and testing
+
+### Tools 
+Docker, 
+GitHub, 
+AWS EC2 Deployment and version control Other Tools
+Postman (API Testing), 
+ArchiMate (Architecture Diagrams), 
+Lucidchart (Workflow Design)Design and testing
 
 ## 3.7 Technologies | DATABASES | Cloud Services.
-To demonstrate functionality without high costs:
-Service Cloud Provider Purpose
+To demonstrate functionality without high costs: Service Cloud Provider Purpose
 EC2 Instance AWS Host backend app
 RDS MySQL AWS Relational database
 S3 Bucket AWS Store reports (JSON/CSV)
 SNS Topic AWS Email notifications
 
 ## 3.8 System Architecture Diagram
-Created by : ArchiMate tool.
-Gantt chart
+Created by : ArchiMate tool. Gantt chart
 A flowchart for user interactions:
 1. Login
 2. Select Provider/Service/Calculate
 3. View Results
-4. 4. Receive Report Email.
+4. Receive Report Email.
 
 ## 3.9 Functional Workflow
 ### Page 1: Login / Registration
@@ -274,19 +281,19 @@ developers across the world.
 ## 5.0 References
 Amazon Web Services (AWS) Pricing API Documentation
 Available at: https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/price-changes.html
-Accessed October 2025.
+
 Google Cloud Billing Catalog API
 Available at: https://cloud.google.com/billing/v1/how-tos/catalog-api
-Accessed October 2025.
+
 Microsoft Azure Retail Prices API Documentation
 Available at: https://learn.microsoft.com/en-us/rest/api/cost-management/retail-prices/azureretail-prices
-Accessed October 2025.
+
 boto3 — AWS SDK for Python
 Available at: https://boto3.amazonaws.com/v1/documentation/api/latest/index.html
-Accessed October 2025.
+
 google-cloud — Google Cloud Client Libraries for Python
 Available at: https://cloud.google.com/python/docs/reference
-Accessed October 2025.
+
 azure-mgmt — Microsoft Azure Management Libraries for Python
 Available at: https://learn.microsoft.com/en-us/python/api/overview/azure/?view=azure-python
-Accessed October 2025.
+
