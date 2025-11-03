@@ -3,15 +3,15 @@ A Full Stack - 3 Tier (FrontEnd, BackEnd and DB) Cloud Price Comparator Website.
 
 # 🏗 Cloud Cost Comparator – Project Proposal
 
-# Project Lead : 
+### Project Lead : 
 Murtuza Hussain, Mohammed (c0950760).
-# Team Members
+### Team Members
 Keshav Koirala– Frontend Developer (c0944046).
 Khushboo Rathva – Backend Developer (c0947900).
 Gurpreet Singh – Database Engineer (c0932560).
 
-# 1. Abstract / Executive Summary
-# Project Overview
+## 1. Abstract / Executive Summary
+## Project Overview
 The Cloud Cost Comparator is a 3-tier web-based software application designed to help users
 compare the pricing of key cloud computing services across major cloud providers — Amazon
 Web Services (AWS), Microsoft Azure, and Google Cloud Platform (GCP).
@@ -19,14 +19,14 @@ The application aims to simplify decision-making for individuals and businesses 
 transparency while selecting cloud resources such as Compute (EC2/VMs), Storage
 (S3/Blob/GCS), Databases (RDS/SQL/Firestore), Load Balancers, Notification,
 and Monitoring services.
-# Abstract
+### Abstract
 Problem/Need: Cloud service selection is overwhelming and laborious. Pricing, tiers, and
 regions vary with specific providers like AWS, Azure, and Google Cloud; major cost drivers are
 hidden across dozens of pages: storage classes, data egress, request charges to name a few.
 Students, startups, and small teams make partial-information decisions on a regular basis that
 lead to overspending or sub-optimally designed solutions. There is an apparent need for an easy
 way to see side-by-side costs and value estimates of common services from multiple providers.
-# What to Be Done: Our project will clearly compare different major cloud providers on an
+### What to Be Done: Our project will clearly compare different major cloud providers on an
 apples-to-apples basis in core service categories such as virtual machines, object storage, and
 managed databases. A user will select their service category, region, and basic usage
 assumptions, and the application will return a ranked list of options including a plain-language
@@ -39,7 +39,7 @@ included," such as capacity, storage, and average network charges. Users will be
 or download a concise summary of their comparison for future reference. The proposal phase
 will develop the plan, structure, and sample screens; the final phase will deliver a working
 demonstration.
-# Who Will Benefit
+### Who Will Benefit
 • StartUps and project teams that need to make fast, defensible comparisons within design reviews.
 • Startups and small organizations seeking clear, unbiased cost visibility before signing up with a platform.
 • Instructors and clubs seeking a hands-on tool for teaching total cost of ownership an cost-aware architecture.
@@ -48,7 +48,7 @@ supports users to make choices among cloud services that fit their budget and me
 The result is a straightforward and trustworthy view of the price-value question across providers,
 supporting smarter decisions and better learning outcomes.
 
-# Key Features
+### Key Features
 • User authentication and personalized history.
 • Real-time or cached API calls to cloud pricing endpoints.
 • Email delivery of summarized comparison reports.
@@ -74,7 +74,7 @@ aggregating and standardizing pricing data from major cloud providers into an in
 searchable interface. The platform allows users to compare compute, storage, and networking
 costs across multiple providers, filtered by region, configuration, and usage patterns.
 
-# Public Benefit:
+### Public Benefit:
 The solution fosters transparency, efficiency, and financial fairness in the ecosystem of cloud
 computing. By so doing, it allows people, startups, researchers, and enterprises to make informed
 cloud purchasing decisions based on appropriate data, minimizing waste, encouraging
@@ -89,30 +89,30 @@ a 3-tier architecture approach — Frontend, Backend, and Database — with clou
 integration for data storage, notifications, and cost comparison API access.
 
 Key Activities:
-# Activity Description Responsible Person
-# 1 Frontend Development
+## Activity Description Responsible Person
+### 1 Frontend Development
 Design and develop the user interface using
 React/Vanilla JS. Implement 3 web pages: Login,
 Selection, and Results Page.
 - Keshav
-# 2 Backend Development
+### 2 Backend Development
 Build APIs to handle user authentication, pricing data
 fetching, report generation, and SNS-based notifications.
 - Khushboo Rathva
-# 3 Backend, Cloud Integration & DevOps
+### 3 Backend, Cloud Integration & DevOps
 Connect backend with cloud APIs (AWS, GCP, Azure).
 Implement S3 integration for file storage and SNS/email
 notifications. Deploy app using EC2.
 - Murtuza Hussain
-# 4 Database Design and Integration
+### 4 Database Design and Integration
 Create and manage relational database (AWS RDS –
 MySQL/PostgreSQL). Store user login info, saved
 results, and report metadata.
 - Gurpreet Singh
   
-# 3.2 Detailed Functionality Breakdown
+## 3.2 Detailed Functionality Breakdown
 Web Page Functionality Cloud Interaction
-# 1. Login Page
+### 1. Login Page
 Users sign up or log in using their credentials
 (username, name, email, password). User data
 stored in RDS.
@@ -120,7 +120,7 @@ RDS for storage; SNS or
 Python SMTP for email
 notification after registration or
 report generation.
-# 2. Selection Page
+### 2. Selection Page
 Users select: (a) Cloud providers (AWS, Azure,
 GCP), (b) Services to compare (Storage, Compute,
 Database, Load Balancer, Monitoring,
@@ -129,21 +129,21 @@ Connects to cloud pricing APIs
 (AWS Pricing API, Azure
 Retail Prices API, GCP Cloud
 Billing API).
-# 3. Results Page
+### 3. Results Page
 Displays previous and current pricing comparison results. Fetches historical results saved in S3 buckets. Uses AWS S3 SDK to retrieve report files. 
 Allows user to download or view summary.
 3.3 Methodology
 The project will follow a hybrid Agile model (Scrum-like) with weekly progress check-ins and
 integration testing at every milestone.
 
-# Approach:
+### Approach:
 1. Design Phase – Develop architecture, cloud service mapping, and wireframes.
 2. Incremental Development – Frontend and backend built in parallel.
 3. Integration – Connect backend APIs with the database and cloud services.
 4. Testing & Validation – Verify accuracy of price comparison and service performance.
 5. Deployment – Host on AWS EC2 or locally using Docker for final demonstration.
 
-# 3.4 Expected Outcomes
+## 3.4 Expected Outcomes
 1. Functional 3-tier web application hosted locally or on AWS EC2.
 2. User login system with personalized cost comparison reports.
 3. Real-time or cached cloud pricing data comparison across AWS, GCP, and Azure.
@@ -151,28 +151,28 @@ integration testing at every milestone.
 5. Historical reports stored and retrieved from S3.
 6. Dashboard-style display for price summary and provider ranking.
 
-# 3.5 Project Timeline
+## 3.5 Project Timeline
 Phase Tasks Responsible
 Members Duration Expected Output
-# Phase 1: Requirements & Design Requirement gathering 
+### Phase 1: Requirements & Design Requirement gathering 
 Architecture design, database schema, cloud service setup. All 5 days Design document, database ERD, architecture diagram
-# Phase 2: Frontend Development
+### Phase 2: Frontend Development
 Create 3 web pages (Login,Selection, Results) using React/JS. Build responsive UI.
 Keshav 10 days Functional frontend with navigation
-# Phase 3: Backend Development
+### Phase 3: Backend Development
 Build APIs for login/auth, comparison logic, data fetch from cloud APIs.
 Khushboo 10 days REST API endpoints ready
-# Phase 4: Cloud Integration & DevOps
+### Phase 4: Cloud Integration & DevOps
 Integrate APIs with AWS (S3, SNS), test cloud pricing retrieval, configure EC2 deployment.
 Murtuza 8 day Cloud-integrated backend, deployed app
-# Phase 5: Database Setup & Testing
+### Phase 5: Database Setup & Testing
 Create RDS schema, link tobackend, test login and report persistence.
 Gurpreet 6 days Database fully functional
-# Phase 6: Final Testing & Documentation
+### Phase 6: Final Testing & Documentation
 System testing, bug fixes, final deployment, prepare report.
 All 6 days Working system demo and proposal submission
 
-# 3.6 Technology Stack
+## 3.6 Technology Stack
 Category Technology / Tool Purpose / Justification
 Frontend React.js / Vanilla JS, HTML5, CSS3 Build interactive and responsive web UI
 Backend Python (Flask/Django Framework) Handle API requests, data processing, and business logic
@@ -187,7 +187,7 @@ Category Technology / Tool Purpose / Justification Deployment
 Tools Docker, GitHub, AWS EC2 Deployment and version control Other Tools
 Postman (API Testing), ArchiMate (Architecture Diagrams), Lucidchart (Workflow Design)Design and testing
 
-# 3.7 Technologies | DATABASES | Cloud Services.
+## 3.7 Technologies | DATABASES | Cloud Services.
 To demonstrate functionality without high costs:
 Service Cloud Provider Purpose
 EC2 Instance AWS Host backend app
@@ -195,7 +195,7 @@ RDS MySQL AWS Relational database
 S3 Bucket AWS Store reports (JSON/CSV)
 SNS Topic AWS Email notifications
 
-# 3.8 System Architecture Diagram
+## 3.8 System Architecture Diagram
 Created by : ArchiMate tool.
 Gantt chart
 A flowchart for user interactions:
@@ -204,21 +204,22 @@ A flowchart for user interactions:
 3. View Results
 4. 4. Receive Report Email.
 
-# 3.9 Functional Workflow
-# Page 1: Login / Registration
+## 3.9 Functional Workflow
+### Page 1: Login / Registration
 • User registers using name, email, and password.
 • Credentials stored in AWS RDS (MySQL).
 • On registration, a confirmation email is sent via AWS SNS or Python SMTP.
-# Page 2: Selection Page
+### Page 2: Selection Page
 • User selects:
 1. Cloud Providers: AWS, GCP, Azure.
 2. Services: Compute, Storage, Database, Load Balancer, Notifications, Monitoring.
 • Backend fetches pricing from official APIs.
 • Backend performs cost calculations and displays comparative results.
-# Page 3: Results / History Page
+### Page 3: Results / History Page
 • Displays current results and previous calculations fetched from AWS S3.
 • Each result is stored as a JSON/CSV file in the user’s personal S3 folder.
-# 4.0 Result / Deliverables
+
+## 4.0 Result / Deliverables
 The final product of the Cloud Price Comparison Web Application will be a fully functional,
 user-friendly web platform devised to assist users in their effort to compare cloud service pricing
 effectively. In the scope of this first version, this covers the following features:
@@ -269,7 +270,8 @@ financial planning for an organization consuming cloud infrastructure. Combined,
 will move the application from simple price comparison to a full-fledged cloud cost intelligence
 platform, enabling transparent, sustainable, and data-driven decision-making for businesses and
 developers across the world.
-# 5.0 References
+
+## 5.0 References
 Amazon Web Services (AWS) Pricing API Documentation
 Available at: https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/price-changes.html
 Accessed October 2025.
