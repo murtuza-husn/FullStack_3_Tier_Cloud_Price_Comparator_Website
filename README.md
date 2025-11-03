@@ -231,15 +231,15 @@ The final product of the Cloud Price Comparison Web Application will be a fully 
 user-friendly web platform devised to assist users in their effort to compare cloud service pricing
 effectively. In the scope of this first version, this covers the following features:
 
-1.Centralized Cloud Pricing Dashboard
+1. Centralized Cloud Pricing Dashboard
 A web interface where users can view, filter, and compare prices for compute, storage, and
 networking services across major cloud providers, including AWS, Azure, and Google Cloud.
 
-2.Provider-Agnostic Cost Comparisons
+2. Provider-Agnostic Cost Comparisons
 Standardized metrics that allow users to fairly and accurately compare costs across different
 cloud providers, filtered by service type, region, and usage parameters.
 
-3.User Login and Registration
+3. User Login and Registration
 Allow secure user authentication, enabling personalized experiences such as saving preferences,
 configurations, and past comparisons.
 
