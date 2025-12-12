@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-beige">
+  <div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card p-4 shadow-sm col-md-6 col-lg-5">
+      <h2 class="text-center mb-4" style="color:#5C4033;">Login</h2>
+      <form id="loginForm">
+        <div class="mb-3">
+          <input type="email" class="form-control" placeholder="Email" required id="email">
+        </div>
+        <div class="mb-3 position-relative">
+          <input type="password" class="form-control" placeholder="Password" required id="password">
+          <span id="togglePassword" class="position-absolute top-50 end-0 translate-middle-y me-3" style="cursor:pointer; color:#5C4033; font-size:0.9rem;">Show</span>
+        </div>
+        <button type="submit" class="btn btn-brown w-100">Login</button>
+      </form>
+      <div class="mt-3 text-center">
+        <a href="forgot-password.html">Forgot Password?</a>
+      </div>
+      <p class="mt-2 text-center">Don't have an account? <a href="signup.html">Sign Up</a></p>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+  // Show/Hide Password
+  const toggle = document.getElementById("togglePassword");
+  const passField = document.getElementById("password");
+  toggle.addEventListener("click", () => {
+    const type = passField.getAttribute("type") === "password" ? "text" : "password";
+    passField.setAttribute("type", type);
+    toggle.textContent = type === "password" ? "Show" : "Hide";
+  });
+
+  // Login form submit
+  document.getElementById("loginForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    fetch("http://localhost:5000/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email, password })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.redirect) {
+
+          // ✅ SAVE TOKEN + USERNAME
+          localStorage.setItem("token", "dummy-token");
+          localStorage.setItem("userName", email);
+
+          // redirect
+          window.location.href = data.redirect;
+
+        } else {
+          alert(data.message || "Login failed");
+        }
+      })
+      .catch(() => {
+        alert("Login failed. Please try again.");
+      });
+  });
+</script>
+
+</body>
+</html>
