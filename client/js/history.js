@@ -15,7 +15,7 @@ $(document).ready(async function() {
     window.location.href = "login.html";
   });
   try {
-    const response = await fetch("http://localhost:5000/api/pricing/history?userName=" + encodeURIComponent(userName), {
+    const response = await fetch(`${BASE_URL}/api/pricing/history?userName=` + encodeURIComponent(userName), {
       headers: { "Authorization": "Bearer " + token }
     });
     if (!response.ok) throw new Error("Failed to fetch history");
@@ -80,7 +80,7 @@ $(document).ready(async function() {
         if (confirm("Are you sure you want to delete this comparison?")) {
           try {
             const token = localStorage.getItem("token");
-            const res = await fetch(`http://localhost:5000/api/pricing/history/${entry._id}`, {
+            const res = await fetch(`${BASE_URL}/api/pricing/history/${entry._id}`, {
               method: "DELETE",
               headers: { "Authorization": "Bearer " + token }
             });
