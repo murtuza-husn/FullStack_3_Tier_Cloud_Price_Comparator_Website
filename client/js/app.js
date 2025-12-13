@@ -74,7 +74,7 @@ if (storeBtn) {
     const token = localStorage.getItem("token");
     const userName = localStorage.getItem("userName");
     try {
-      const response = await fetch("http://localhost:5000/api/pricing/history", {
+      const response = await fetch(`${BASE_URL}/api/pricing/history`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -127,7 +127,7 @@ compareBtn.addEventListener("click", async () => {
 
   try {
     // Fetch pricing from backend API with JWT
-    const response = await fetch("http://localhost:5000/api/pricing", {
+    const response = await fetch(`${BASE_URL}/api/pricing`, {
       method: "POST",
       headers: { 
         "Content-Type": "application/json",
