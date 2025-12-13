@@ -2,6 +2,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
+const { PricingClient, GetProductsCommand } = require("@aws-sdk/client-pricing");
 
 // Import models
 const User = require("./models/User");
@@ -15,12 +16,189 @@ mongoose.connect(process.env.MONGO_URI)
 .catch(err => console.error("❌ MongoDB connection error:", err));
 
 
+// AWS Pricing client (Pricing API must use us-east-1)
+const awsPricing = new PricingClient({
+  region: "us-east-1",
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  },
+});
+
+//Ec2 price from aws api 
+async function getAwsEc2Price() {
+  try {
+    const command = new GetProductsCommand({
+      ServiceCode: "AmazonEC2",
+      Filters: [
+        { Type: "TERM_MATCH", Field: "productFamily", Value: "Compute Instance" },
+        { Type: "TERM_MATCH", Field: "instanceType", Value: "t3.micro" },
+        { Type: "TERM_MATCH", Field: "location", Value: "Canada (Central)" },
+        { Type: "TERM_MATCH", Field: "operatingSystem", Value: "Linux" },
+        { Type: "TERM_MATCH", Field: "preInstalledSw", Value: "NA" },
+        { Type: "TERM_MATCH", Field: "tenancy", Value: "Shared" },
+        { Type: "TERM_MATCH", Field: "termType", Value: "OnDemand" },
+      ],
+      FormatVersion: "aws_v1",
+    });
+
+    const response = await awsPricing.send(command);
+
+    if (!response.PriceList || response.PriceList.length === 0) {
+      console.warn("No AWS pricing data found for this filter");
+      return null;
+    }
+
+    // Parse the first price item
+    const priceItem = JSON.parse(response.PriceList[0]);
+
+    const onDemand = priceItem.terms?.OnDemand;
+    if (!onDemand) return null;
+
+    const priceDimensions = Object.values(onDemand)[0]?.priceDimensions;
+    if (!priceDimensions) return null;
+
+    const pricePerHour = Object.values(priceDimensions)[0]?.pricePerUnit?.USD;
+    const priceUnit =Object.values(priceDimensions)[0]?.unit;
+    console.log(priceUnit);
+    return pricePerHour ? {"price_per_hour":parseFloat(pricePerHour) ,"unit":priceUnit} : null;
+
+  } catch (err) {
+    console.error("Error fetching AWS price:", err.message);
+    return null;
+  }
+}
+
+async function getS3Price() {
+  try {
+    const command = new GetProductsCommand({
+      ServiceCode: "AmazonS3",
+      Filters: [
+        // { Type: "TERM_MATCH", Field: "productFamily", Value: "Storage" },
+        // { Type: "TERM_MATCH", Field: "storageClass", Value: "Standard" },
+        // { Type: "TERM_MATCH", Field: "location", Value: "Canada (Central)" },
+        // { Type: "TERM_MATCH", Field: "termType", Value: "OnDemand" }
+         { Type: "TERM_MATCH", Field: "productFamily", Value: "Storage" },
+         { Type: "TERM_MATCH", Field: "location", Value: "Canada (Central)" },
+         { Type: "TERM_MATCH", Field: "termType", Value: "OnDemand" }
+      ],
+      FormatVersion: "aws_v1",
+    });
+
+    const response = await awsPricing.send(command);
+
+    if (!response.PriceList || response.PriceList.length === 0) {
+      console.warn("No AWS S3 pricing data found for these filters");
+      return null;
+    }
+
+    // Parse JSON from AWS
+    const priceItem = JSON.parse(response.PriceList[0]);
+    
+    const onDemand = priceItem.terms?.OnDemand;
+    if (!onDemand) return null;
+
+    const priceDimensions = Object.values(onDemand)[0]?.priceDimensions;
+    if (!priceDimensions) return null;
+
+    const pricePerGBMonth = Object.values(priceDimensions)[0]?.pricePerUnit?.USD;
+    const priceUnit =Object.values(priceDimensions)[0]?.unit;
+
+    return pricePerGBMonth ? {"price_unit":priceUnit, "price": parseFloat(pricePerGBMonth) }: null;
+
+  } catch (err) {
+    console.error("Error fetching S3 price:", err.message);
+    return null;
+  }
+}
+
+async function getRdsPrice() {
+  try {
+    const command = new GetProductsCommand({
+      ServiceCode: "AmazonRDS",
+      Filters: [
+        { Type: "TERM_MATCH", Field: "instanceType", Value: "db.t3.micro" },
+        { Type: "TERM_MATCH", Field: "databaseEngine", Value: "PostgreSQL" },
+        { Type: "TERM_MATCH", Field: "deploymentOption", Value: "Single-AZ" },
+        { Type: "TERM_MATCH", Field: "location", Value: "Canada (Central)" },
+        { Type: "TERM_MATCH", Field: "productFamily", Value: "Database Instance" },
+        { Type: "TERM_MATCH", Field: "termType", Value: "OnDemand" }
+      ],
+      FormatVersion: "aws_v1"
+    });
+
+    const response = await awsPricing.send(command);
+
+    if (!response.PriceList || response.PriceList.length === 0) {
+      console.warn("No AWS RDS pricing data found for these filters");
+      return null;
+    }
+
+    const priceItem = JSON.parse(response.PriceList[0]);
+
+    const onDemand = priceItem.terms?.OnDemand;
+    if (!onDemand) return null;
+
+    const priceDimensions = Object.values(onDemand)[0]?.priceDimensions;
+    if (!priceDimensions) return null;
+
+    const pricePerHour = Object.values(priceDimensions)[0]?.pricePerUnit?.USD;
+    const priceUnit =Object.values(priceDimensions)[0]?.unit;
+    
+    return pricePerHour ?{"price_unit":priceUnit, "price": parseFloat(pricePerHour) }: null;
+
+
+  } catch (err) {
+    console.error("Error fetching RDS price:", err.message);
+    return null;
+  }
+}
+
+async function getLambdaRequestPrice() {
+  try {
+    const command = new GetProductsCommand({
+      ServiceCode: "AWSLambda",
+      Filters: [
+            // { Type: "TERM_MATCH", Field: "productFamily", Value: "AWS Lambda-Requests" }
+        //  { Type: "TERM_MATCH", Field: "productFamily", Value: "AWS Lambda-Requests" },
+        //  { Type: "TERM_MATCH", Field: "location", Value: "Canada Central" }
+      ],
+      FormatVersion: "aws_v1"
+    });
+
+    const response = await awsPricing.send(command);
+
+    if (!response.PriceList || response.PriceList.length === 0) {
+      console.warn("No Lambda Requests pricing found");
+      return null;
+    }
+
+    const item = JSON.parse(response.PriceList[0]);
+    const onDemand = item.terms?.OnDemand;
+    if (!onDemand) return null;
+
+    const priceDimensions = Object.values(onDemand)[0]?.priceDimensions;
+    if (!priceDimensions) return null;
+
+    const price = Object.values(priceDimensions)[0]?.pricePerUnit?.USD;
+    const priceUnit =Object.values(priceDimensions)[0]?.unit;
+    return price ?{"price_unit":priceUnit,"price":parseFloat(price)}  : null;
+
+  } catch (err) {
+    console.error("Lambda Requests error:", err.message);
+    return null;
+  }
+}
+
+
 // 2️⃣ Create example data
 const createExampleData = async () => {
   try {
     // Hash the password
     const hashedPassword = await bcrypt.hash("password123", 10);
-
+    const ec2price= await getAwsEc2Price();
+    const s3price=await getS3Price();
+    const rdsprice= await getRdsPrice();
 
     // Example users
     const users = [
@@ -50,10 +228,11 @@ const createExampleData = async () => {
     // Clear existing pricing data to avoid duplicates
     await Pricing.deleteMany({});
 
+  // var os_a = api call
     // Pricing data
     const pricingData = [
       // Object Storage
-      { platform: "Amazon S3", service: "Object Storage", price: 0.023 },
+      { platform: "Amazon S3", service: "Object Storage", price: s3price.price  },
       { platform: "Azure Blob Storage", service: "Object Storage", price: 0.018 },
       { platform: "Cloud Storage", service: "Object Storage", price: 0.020 },
       { platform: "Object Storage", service: "Object Storage", price: 0.025 }, // Oracle Cloud
@@ -61,7 +240,7 @@ const createExampleData = async () => {
       { platform: "Object Storage Service (OSS)", service: "Object Storage", price: 0.017 }, // Alibaba Cloud
 
       // Virtual Machines (Compute)
-      { platform: "Amazon EC2", service: "Virtual Machines (Compute)", price: 0.012 },
+      { platform: "Amazon EC2", service: "Virtual Machines (Compute)", price:ec2price.price_per_hour},
       { platform: "Azure Virtual Machines", service: "Virtual Machines (Compute)", price: 0.008 },
       { platform: "Compute Engine", service: "Virtual Machines (Compute)", price: 0.010 },
       { platform: "Compute VM Instances", service: "Virtual Machines (Compute)", price: 0.012 }, // Oracle Cloud
@@ -69,7 +248,7 @@ const createExampleData = async () => {
       { platform: "Elastic Compute Service (ECS)", service: "Virtual Machines (Compute)", price: 0.007 }, // Alibaba Cloud
 
       // Relational Database Service
-      { platform: "Amazon RDS", service: "Relational Database Service", price: 0.025 },
+      { platform: "Amazon RDS", service: "Relational Database Service", price: rdsprice.price },
       { platform: "Azure SQL Database", service: "Relational Database Service", price: 0.021 },
       { platform: "Cloud SQL", service: "Relational Database Service", price: 0.020 },
       { platform: "Autonomous Database", service: "Relational Database Service", price: 0.030 }, // Oracle Cloud
@@ -85,7 +264,7 @@ const createExampleData = async () => {
       { platform: "ApsaraDB for MongoDB", service: "NoSQL Database (Document-oriented)", price: 0.020 }, // Alibaba Cloud
 
       // Serverless Functions
-      { platform: "AWS Lambda", service: "Serverless Functions", price: 0.00001667 },
+      { platform: "AWS Lambda", service: "Serverless Functions", price: getLambdaRequestPrice().price},
       { platform: "Azure Functions", service: "Serverless Functions", price: 0.000016 },
       { platform: "Cloud Functions", service: "Serverless Functions", price: 0.000016 }, // GCP
       { platform: "Oracle Functions", service: "Serverless Functions", price: 0.000017 },
@@ -95,7 +274,7 @@ const createExampleData = async () => {
     for (const p of pricingData) {
       const pricing = new Pricing(p);
       await pricing.save();
-      console.log("Pricing saved:", pricing);
+      // console.log("Pricing saved:", pricing);
     }
 
     mongoose.disconnect(); // Disconnect after saving

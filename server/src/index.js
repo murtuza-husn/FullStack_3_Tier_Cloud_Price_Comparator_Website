@@ -26,6 +26,10 @@ app.get("/", (req, res) => {
   res.send("Server is running!");
 });
 
+
+
+
+
 // Mock pricing data endpoint
 app.post("/api/pricing", (req, res) => {
   const { platforms, services } = req.body;
