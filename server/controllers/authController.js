@@ -16,7 +16,7 @@ exports.login = async (req, res) => {
     // Optionally, generate JWT here
     return res.status(200).json({ 
       message: "Login successful", 
-      redirect: "/client/index.html",
+      redirect: "/index.html",
       firstName: user.firstName,
       lastName: user.lastName
     });
@@ -45,13 +45,13 @@ exports.signup = async (req, res) => {
       password: hashedPassword
     });
     await user.save();
-    return res.status(200).json({ message: "Signup successful", redirect: "/client/login.html" });
+    return res.status(200).json({ message: "Signup successful", redirect: "/login.html" });
   } catch (err) {
     return res.status(500).json({ message: "Server error" });
   }
 };
 exports.forgotPassword = (req, res) => {
   // Example: after successful password reset, redirect to login page
-  // return res.status(200).json({ message: "Password reset successful", redirect: "/client/login.html" });
-  return res.status(501).json({ message: "Not implemented", redirect: "/client/forgot-password.html" });
+  // return res.status(200).json({ message: "Password reset successful", redirect: "/login.html" });
+  return res.status(501).json({ message: "Not implemented", redirect: "/forgot-password.html" });
 };

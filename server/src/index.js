@@ -12,10 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB connection error:", err));
 
@@ -34,7 +31,7 @@ app.post("/api/pricing", (req, res) => {
   services.forEach(service => {
     pricingData[service] = {};
     platforms.forEach(platform => {
-      pricingData[service][platform] = parseFloat((Math.random() * 100).toFixed(3));
+      pricingData[service][platform] = parseFloat((Math.random() * 100));
     });
   });
   res.json(pricingData);

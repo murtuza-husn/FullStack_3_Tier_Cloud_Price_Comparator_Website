@@ -9,6 +9,8 @@ const pricingRoutes = require("./routes/pricing");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const path = require("path");
+
 // Middleware
 app.use(cors({
   origin: '*',
@@ -16,6 +18,11 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 app.use(express.json());
+
+// Serve static client files so requests like /client/index.html succeed
+app.use('/client', express.static(path.join(__dirname, '..', 'client')));
+// Also serve client root (e.g. GET /index.html)
+app.use(express.static(path.join(__dirname, '..', 'client')));
 
 // Routes
 app.use("/api/auth", authRoutes);
