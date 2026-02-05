@@ -57,9 +57,9 @@
     })
       .then(res => res.json())
       .then(data => {
-        if (data.redirect) {
-
-
+        if (data.message && data.message.toLowerCase().includes("invalid")) {
+          alert(data.message || "Login failed");
+        } else {
           // ✅ SAVE TOKEN + USER FULL NAME
           localStorage.setItem("token", "dummy-token");
           if (data.firstName && data.lastName) {
@@ -67,12 +67,8 @@
           } else {
             localStorage.setItem("userName", email);
           }
-
-          // redirect
-          window.location.href = data.redirect;
-
-        } else {
-          alert(data.message || "Login failed");
+          // Always redirect to index.html after login
+          window.location.href = "index.html";
         }
       })
       .catch(() => {

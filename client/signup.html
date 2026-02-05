@@ -64,10 +64,13 @@
       })
         .then(res => res.json())
         .then(data => {
-          if (data.redirect) {
-            window.location.href = data.redirect;
+          if (data.message && data.message.toLowerCase().includes("user already exists")) {
+            alert(data.message);
+          } else if (data.message && data.message.toLowerCase().includes("server error")) {
+            alert("Signup failed. Please try again.");
           } else {
-            alert(data.message || "Signup failed");
+            // Always redirect to login after successful signup
+            window.location.href = "login.html";
           }
         })
         .catch(() => {

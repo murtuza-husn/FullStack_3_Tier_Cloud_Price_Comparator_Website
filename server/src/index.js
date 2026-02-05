@@ -2,6 +2,7 @@
 // src/index.js
 
 const express = require("express");
+const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -11,15 +12,23 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Enable CORS
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB connection error:", err));
 
 app.use(express.json());
+
+// Register auth routes
+const authRoutes = require("../routes/auth");
+app.use("/api/auth", authRoutes);
 
 
 app.get("/", (req, res) => {
