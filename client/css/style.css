@@ -1,3 +1,47 @@
+/* Custom brown button for login/signup */
+.btn-brown {
+  background-color: #8d6748;
+  color: #fff;
+  border: none;
+  transition: background 0.2s;
+}
+.btn-brown:hover, .btn-brown:focus {
+  background-color: #5C4033;
+  color: #fff;
+}
+
+/* Card and form enhancements for login/signup */
+.card {
+  border-radius: 18px;
+  border: none;
+  box-shadow: 0 4px 24px rgba(92, 64, 51, 0.08);
+}
+.form-control:focus {
+  border-color: #8d6748;
+  box-shadow: 0 0 0 0.2rem rgba(141, 103, 72, 0.15);
+}
+.form-control {
+  border-radius: 8px;
+}
+
+body.bg-beige {
+  background: linear-gradient(135deg, #f5f0e1 60%, #e7d3c1 100%);
+}
+
+/* Headings for login/signup */
+h2 {
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* Links */
+a {
+  color: #8d6748;
+  text-decoration: underline;
+}
+a:hover {
+  color: #5C4033;
+}
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
