@@ -49,6 +49,6 @@ app.post("/api/pricing", (req, res) => {
   res.json(pricingData);
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server running on http://localhost:${process.env.PORT}`);
 });
